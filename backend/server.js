@@ -1,6 +1,35 @@
+const fs = require('fs');
+const path = require('path');
+
+// Load environment variables from .env
+require('dotenv').config();
+
+// Vercel Serverless environment SQLite initialization handler
+if (process.env.VERCEL) {
+  const dbTemplatePath = path.join(__dirname, 'prisma', 'dev.db');
+  const dbTargetPath = '/tmp/dev.db';
+  
+  if (!fs.existsSync(dbTargetPath)) {
+    try {
+      const dir = path.dirname(dbTargetPath);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      fs.copyFileSync(dbTemplatePath, dbTargetPath);
+      console.log('Database successfully copied to /tmp/dev.db');
+    } catch (err) {
+      console.error('Failed to copy database to /tmp/dev.db:', err);
+    }
+  }
+  process.env.DATABASE_URL = 'file:/tmp/dev.db';
+} else {
+  if (!process.env.DATABASE_URL) {
+    process.env.DATABASE_URL = 'file:./dev.db';
+  }
+}
+
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
 
 const { verifyToken, verifyTempToken, verifySeller, verifyBuyer, verifyDriver, verifyAdmin } = require('./src/middleware/authMiddleware');
 const authController = require('./src/controllers/authController');
@@ -85,7 +114,12 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!', error: err.message });
 });
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
-});
+// Export app for Vercel serverless environment
+module.exports = app;
+
+// Start Server locally if not running in Vercel serverless environment
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
+  });
+}
