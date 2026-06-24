@@ -1,0 +1,138 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            Int        @id @default(autoincrement())
+  username      String     @unique
+  email         String     @unique
+  password      String
+  walletBalance Int        @default(0)
+  address       String?
+  roles         UserRole[]
+  store         Store?
+  cartItems     CartItem[]
+  orders        Order[]    @relation("BuyerOrders")
+  driverOrders  Order[]    @relation("DriverOrders")
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+model UserRole {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  role   String // ADMIN, SELLER, BUYER, DRIVER
+
+  @@unique([userId, role])
+}
+
+model Store {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  userId    Int       @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products  Product[]
+  orders    Order[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String
+  price       Int
+  stock       Int
+  storeId     Int
+  store       Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model ApplicationReview {
+  id           Int      @id @default(autoincrement())
+  reviewerName String
+  rating       Int      // Value from 1 to 5
+  comment      String
+  createdAt    DateTime @default(now())
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id              Int                  @id @default(autoincrement())
+  buyerId         Int
+  buyer           User                 @relation("BuyerOrders", fields: [buyerId], references: [id], onDelete: Cascade)
+  storeId         Int
+  store           Store                @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  driverId        Int?
+  driver          User?                @relation("DriverOrders", fields: [driverId], references: [id], onDelete: SetNull)
+  subtotal        Int
+  deliveryFee     Int
+  tax             Int                  // PPN 12%
+  total           Int
+  deliveryMethod  String               // "Instant", "Next Day", or "Regular"
+  status          String               @default("Sedang Dikemas")
+  discountApplied Int                  @default(0)
+  discountCode    String?
+  items           OrderItem[]
+  statusHistory   OrderStatusHistory[]
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int
+  price     Int
+}
+
+model OrderStatusHistory {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status    String
+  comment   String?
+  createdAt DateTime @default(now())
+}
+
+model Voucher {
+  id             Int      @id @default(autoincrement())
+  code           String   @unique
+  discountValue  Int
+  expiryDate     DateTime
+  remainingUsage Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Promo {
+  id            Int      @id @default(autoincrement())
+  code          String   @unique
+  discountValue Int
+  expiryDate    DateTime
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+

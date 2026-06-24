@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEAPEDIA - Modern Maritime Fullstack Marketplace</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo" id="nav-logo">SEAPEDIA <span>Foundation</span></a>
+      <nav>
+        <ul id="nav-links">
+          <li><a href="#" class="nav-link active" data-target="landing-section" id="link-home">Home</a></li>
+          <li><a href="#" class="nav-link" data-target="shop-section" id="link-shop">Shop</a></li>
+          <li><a href="#" class="nav-link" data-target="reviews-section" id="link-reviews">Reviews</a></li>
+          <li id="nav-dashboard-item" style="display: none;"><a href="#" class="nav-link" data-target="dashboard-section" id="link-dashboard">Dashboard</a></li>
+          <li id="nav-guest-item"><button class="nav-link btn btn-primary" data-target="auth-section" id="link-login-btn">Login / Register</button></li>
+          <li id="nav-user-item" style="display: none;">
+            <div class="user-badge">
+              <span id="nav-username">Guest</span>
+              <span class="user-badge-role" id="nav-active-role">None</span>
+              <button class="logout-btn" id="btn-logout">Logout</button>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- ALERT BANNER -->
+    <div id="alert-banner" class="alert-banner"></div>
+
+    <!-- LANDING PAGE SECTION -->
+    <section id="landing-section" class="page-section active">
+      <div class="hero">
+        <div class="hero-content">
+          <h1 class="hero-title">Discover the Best <span>Ocean Products</span> & Services</h1>
+          <p class="hero-subtitle">SEAPEDIA connects seafood buyers, suppliers, logistics drivers, and administrators in a single digital maritime marketplace ecosystem.</p>
+          <div class="hero-buttons">
+            <button class="btn btn-primary" id="btn-hero-explore">Explore Marketplace</button>
+            <button class="btn btn-secondary" id="btn-hero-login">Join as Partner</button>
+          </div>
+        </div>
+        <div class="hero-illustration">
+          <div class="hero-circle">
+            <div class="hero-image">🐟</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Showcase -->
+      <h2 class="features-title">One Platform, Multiple Capabilities</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🛒</div>
+          <h3>Buyers</h3>
+          <p>Browse, purchase, and track premium fresh seafood and maritime equipment from certified vendors.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏪</div>
+          <h3>Sellers</h3>
+          <p>Open your digital shop, list fresh catches or rental gears, and reach thousands of daily consumers.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🚚</div>
+          <h3>Drivers</h3>
+          <p>Offer cargo and cold-chain logistics services to ensure fast delivery from oceans to tables.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Administrators</h3>
+          <p>Monitor platform statistics, verify users and transactions, and manage policies securely.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP SECTION (PRODUCT LISTING) -->
+    <section id="shop-section" class="page-section">
+      <div class="section-header">
+        <h2 class="section-title">Maritime Marketplace</h2>
+        <span style="color: var(--text-secondary);" id="shop-count">Showing 6 products</span>
+      </div>
+      <div class="products-grid" id="products-grid">
+        <!-- Products will be injected via JS -->
+      </div>
+    </section>
+
+    <!-- REVIEWS SECTION (GUEST AND USERS) -->
+    <section id="reviews-section" class="page-section reviews-section">
+      <div class="section-header">
+        <h2 class="section-title">Application Reviews</h2>
+        <span style="color: var(--text-secondary);">Feedback from our guests</span>
+      </div>
+      
+      <!-- Review Items List -->
+      <div class="reviews-grid" id="reviews-grid">
+        <!-- Review cards will be injected here -->
+      </div>
+
+      <!-- Submit Review Form Card -->
+      <div class="review-form-card">
+        <h3>Submit Your Feedback</h3>
+        <form id="form-review">
+          <div class="form-group">
+            <label for="review-name">Name</label>
+            <input type="text" id="review-name" class="form-control" placeholder="Enter your name" required>
+          </div>
+          <div class="form-group">
+            <label>Rating</label>
+            <div class="rating-select" id="rating-select">
+              <span class="rating-star" data-rating="1">★</span>
+              <span class="rating-star" data-rating="2">★</span>
+              <span class="rating-star" data-rating="3">★</span>
+              <span class="rating-star" data-rating="4">★</span>
+              <span class="rating-star" data-rating="5">★</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="review-comment">Comment</label>
+            <textarea id="review-comment" class="form-control" placeholder="Write your review about SEAPEDIA..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" id="btn-submit-review">Submit Review</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- AUTH SECTION (LOGIN & REGISTER) -->
+    <section id="auth-section" class="page-section">
+      <div class="auth-container">
+        <div class="auth-tabs">
+          <div class="auth-tab active" id="tab-login" data-tab="login-form-container">Login</div>
+          <div class="auth-tab" id="tab-register" data-tab="register-form-container">Register</div>
+        </div>
+
+        <!-- Login Form Container -->
+        <div id="login-form-container" class="auth-form-view">
+          <form id="form-login">
+            <div class="form-group">
+              <label for="login-username">Username or Email</label>
+              <input type="text" id="login-username" class="form-control" placeholder="username / email" required>
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" id="btn-login-submit">Login</button>
+          </form>
+        </div>
+
+        <!-- Register Form Container -->
+        <div id="register-form-container" class="auth-form-view" style="display: none;">
+          <form id="form-register">
+            <div class="form-group">
+              <label for="register-username">Username</label>
+              <input type="text" id="register-username" class="form-control" placeholder="e.g. fishmaster99" required>
+            </div>
+            <div class="form-group">
+              <label for="register-email">Email Address</label>
+              <input type="email" id="register-email" class="form-control" placeholder="e.g. user@seapedia.com" required>
+            </div>
+            <div class="form-group">
+              <label for="register-password">Password</label>
+              <input type="password" id="register-password" class="form-control" placeholder="••••••••" required>
+            </div>
+            
+            <!-- Roles selection (Multiple Roles allowed) -->
+            <div class="checkbox-group">
+              <span class="checkbox-label">Select Roles (Multi-Role Support)</span>
+              <div class="checkbox-items">
+                <label class="checkbox-item">
+                  <input type="checkbox" name="register-roles" value="BUYER" checked>
+                  Buyer
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="register-roles" value="SELLER">
+                  Seller
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="register-roles" value="DRIVER">
+                  Driver
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="register-roles" value="ADMIN">
+                  Admin (Single Role)
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" id="btn-register-submit">Register Account</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROLE SELECTION SECTION -->
+    <section id="role-selection-section" class="page-section">
+      <div class="role-selection-container">
+        <h2>Choose Your Active Role</h2>
+        <p>You have logged in with multiple roles. Select one role to configure your session workspace.</p>
+        <div class="role-cards-grid" id="role-selection-cards">
+          <!-- Role select cards will be injected dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD SECTION (AUTHENTICATED HOME) -->
+    <section id="dashboard-section" class="page-section">
+      <div class="dashboard-container">
+        
+        <!-- Profile Column -->
+        <div class="profile-card">
+          <div class="avatar-large" id="profile-avatar">S</div>
+          <h2 class="profile-username" id="profile-username">Username</h2>
+          <p class="profile-email" id="profile-email">user@seapedia.com</p>
+          
+          <div class="active-role-display">
+            <span>Active Role</span>
+            <strong id="profile-active-role">BUYER</strong>
+          </div>
+        </div>
+
+        <!-- Dashboard Content Column -->
+        <div class="dashboard-content">
+          <div class="dashboard-section">
+            <h3>Switch Session Active Role</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
+              You have access to multiple workspaces. Switch your active role for this session:
+            </p>
+            <div class="role-switcher-grid" id="dashboard-role-switcher">
+              <!-- Switcher buttons will be injected dynamically -->
+            </div>
+          </div>
+
+          <div class="dashboard-section">
+            <h3>Assigned Account Roles</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+              These are the roles associated with your account registered in the database:
+            </p>
+            <div class="all-roles-list" id="dashboard-all-roles">
+              <!-- Badges will be injected here -->
+            </div>
+          </div>
+
+          <!-- SELLER WORKSPACE (Dynamic Display) -->
+          <div id="seller-workspace" class="dashboard-section" style="display: none;">
+            <h3>Seller Workspace</h3>
+
+            <!-- Financial Report Income Widget -->
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow);">
+              <div>
+                <span style="font-size: 0.78rem; color: var(--text-secondary); text-transform: uppercase; font-weight: bold; letter-spacing: 0.05em;">Financial Income Report</span>
+                <h4 style="font-size: 1.8rem; color: #10b981; margin-top: 0.25rem; font-weight: 700;" id="seller-income-display">Rp 0</h4>
+              </div>
+              <div style="font-size: 2.2rem; filter: drop-shadow(0 0 10px rgba(16,185,129,0.3));">💰</div>
+            </div>
+            
+            <!-- Store Profile Area -->
+            <div id="store-profile-container" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+              <!-- Injected by JS: Form to create store OR Display of existing store -->
+            </div>
+
+            <!-- Products Inventory Area -->
+            <div id="store-products-container" style="display: none;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h4 style="font-size: 1.1rem; color: #fff;">Products Inventory</h4>
+                <button class="btn btn-primary" style="padding: 0.4rem 1rem; font-size: 0.85rem;" id="btn-add-product">+ Add Product</button>
+              </div>
+              
+              <div style="overflow-x: auto; background: rgba(255,255,255,0.01); border: 1px solid var(--border-glass); border-radius: 12px;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;" id="seller-products-table">
+                  <thead>
+                    <tr style="border-bottom: 1px solid var(--border-glass); background: rgba(255,255,255,0.03);">
+                      <th style="padding: 0.75rem 1rem;">Name</th>
+                      <th style="padding: 0.75rem 1rem;">Price</th>
+                      <th style="padding: 0.75rem 1rem;">Stock</th>
+                      <th style="padding: 0.75rem 1rem; text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="seller-products-body">
+                    <!-- Injected dynamically by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Inbound Orders Section (Seller) -->
+            <div id="seller-orders-container" style="display: none; margin-top: 2rem; border-top: 1px solid var(--border-glass); padding-top: 1.5rem;">
+              <h4 style="font-size: 1.1rem; color: #fff; margin-bottom: 1rem;">Inbound Customer Orders</h4>
+              <div id="seller-orders-list" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- Injected dynamically by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- BUYER WORKSPACE (Dynamic Display) -->
+          <div id="buyer-workspace" class="dashboard-section" style="display: none;">
+            <h3>Buyer Workspace</h3>
+
+            <!-- Financial Report Spending Widget -->
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow);">
+              <div>
+                <span style="font-size: 0.78rem; color: var(--text-secondary); text-transform: uppercase; font-weight: bold; letter-spacing: 0.05em;">Financial Spending Report</span>
+                <h4 style="font-size: 1.8rem; color: var(--color-accent); margin-top: 0.25rem; font-weight: 700;" id="buyer-spending-display">Rp 0</h4>
+              </div>
+              <div style="font-size: 2.2rem; filter: drop-shadow(0 0 10px rgba(0,240,255,0.3));">💸</div>
+            </div>
+
+            <!-- Wallet and Address Row -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+              
+              <!-- Wallet Panel -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.5rem;">
+                <h4 style="font-size: 1.1rem; color: #fff; margin-bottom: 0.75rem;">SEAPEDIA Wallet</h4>
+                <div style="font-size: 1.6rem; color: var(--color-accent); font-weight: 700; margin-bottom: 0.75rem;" id="wallet-balance-display">Rp 0</div>
+                <form id="form-topup" style="display: flex; gap: 0.5rem;">
+                  <input type="number" id="topup-amount" class="form-control" placeholder="Top up amount..." required min="10000" style="padding: 0.4rem 0.75rem; font-size: 0.85rem;">
+                  <button type="submit" class="btn btn-primary" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Top Up</button>
+                </form>
+              </div>
+
+              <!-- Address Panel -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.5rem;">
+                <h4 style="font-size: 1.1rem; color: #fff; margin-bottom: 0.75rem;">Shipping Address</h4>
+                <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; min-height: 2.2rem;" id="address-display">No shipping address set yet.</div>
+                <form id="form-address" style="display: flex; gap: 0.5rem;">
+                  <input type="text" id="shipping-address-input" class="form-control" placeholder="Enter delivery address..." required style="padding: 0.4rem 0.75rem; font-size: 0.85rem;">
+                  <button type="submit" class="btn btn-secondary" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Save</button>
+                </form>
+              </div>
+
+            </div>
+
+            <!-- Shopping Cart Panel -->
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <h4 style="font-size: 1.1rem; color: #fff;">Your Shopping Cart</h4>
+                <button class="btn btn-secondary btn-sm" id="btn-clear-cart" style="color: var(--color-error); border-color: rgba(244,63,94,0.3);">Clear Cart</button>
+              </div>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1rem; border-left: 2px solid var(--color-accent); padding-left: 0.5rem;">
+                <strong>Single-Store Rule:</strong> You can only checkout items from a single store at a time. Adding items from another store will require clearing your cart.
+              </p>
+
+              <div style="overflow-x: auto; margin-bottom: 1rem; border: 1px solid var(--border-glass); border-radius: 8px;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;" id="buyer-cart-table">
+                  <thead>
+                    <tr style="border-bottom: 1px solid var(--border-glass); background: rgba(255,255,255,0.03);">
+                      <th style="padding: 0.75rem;">Item</th>
+                      <th style="padding: 0.75rem;">Store</th>
+                      <th style="padding: 0.75rem;">Price</th>
+                      <th style="padding: 0.75rem; width: 80px;">Qty</th>
+                      <th style="padding: 0.75rem; text-align: right;">Total</th>
+                      <th style="padding: 0.75rem; text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="buyer-cart-body">
+                    <!-- Injected by JS -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                  <span style="font-size: 0.85rem; color: var(--text-secondary);">Subtotal</span>
+                  <div style="font-size: 1.4rem; color: #fff; font-weight: bold;" id="cart-subtotal-display">Rp 0</div>
+                </div>
+                <button class="btn btn-primary" id="btn-cart-checkout" style="padding: 0.6rem 1.5rem;">Proceed to Checkout</button>
+              </div>
+            </div>
+
+            <!-- Order History Panel -->
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.5rem;" id="buyer-orders-panel">
+              <h4 style="font-size: 1.1rem; color: #fff; margin-bottom: 1rem;">My Order History</h4>
+              <div id="buyer-orders-list" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- Injected by JS -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- DRIVER WORKSPACE (Dynamic Display) -->
+          <div id="driver-workspace" class="dashboard-section" style="display: none;">
+            <h3>Driver Workspace</h3>
+
+            <!-- Driver Earnings Widget -->
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow);">
+              <div>
+                <span style="font-size: 0.78rem; color: var(--text-secondary); text-transform: uppercase; font-weight: bold; letter-spacing: 0.05em;">Driver Shipping Earnings</span>
+                <h4 style="font-size: 1.8rem; color: var(--color-accent); margin-top: 0.25rem; font-weight: 700;" id="driver-earnings-display">Rp 0</h4>
+              </div>
+              <div style="font-size: 2.2rem; filter: drop-shadow(0 0 10px rgba(0,240,255,0.3));">🚚</div>
+            </div>
+
+            <!-- Active Job Area -->
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;" id="driver-active-job-container">
+              <h4 style="font-size: 1.1rem; color: #fff; margin-bottom: 1rem;">Active Delivery Task</h4>
+              <div id="driver-active-job-content">
+                <!-- Injected dynamically by JS -->
+              </div>
+            </div>
+
+            <!-- Available Jobs / Find Jobs Area -->
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+              <h4 style="font-size: 1.1rem; color: #fff; margin-bottom: 1rem;">Available Shipments (Find Jobs)</h4>
+              <div style="overflow-x: auto; background: rgba(255,255,255,0.01); border: 1px solid var(--border-glass); border-radius: 8px;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;" id="driver-jobs-table">
+                  <thead>
+                    <tr style="border-bottom: 1px solid var(--border-glass); background: rgba(255,255,255,0.03);">
+                      <th style="padding: 0.75rem;">Order</th>
+                      <th style="padding: 0.75rem;">Store</th>
+                      <th style="padding: 0.75rem;">Destination</th>
+                      <th style="padding: 0.75rem;">Method</th>
+                      <th style="padding: 0.75rem;">Shipping Fee</th>
+                      <th style="padding: 0.75rem; text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="driver-jobs-body">
+                    <!-- Injected dynamically by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Completed Jobs History -->
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.5rem;">
+              <h4 style="font-size: 1.1rem; color: #fff; margin-bottom: 1rem;">Delivery Jobs History</h4>
+              <div style="overflow-x: auto; background: rgba(255,255,255,0.01); border: 1px solid var(--border-glass); border-radius: 8px;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;" id="driver-history-table">
+                  <thead>
+                    <tr style="border-bottom: 1px solid var(--border-glass); background: rgba(255,255,255,0.03);">
+                      <th style="padding: 0.75rem;">Order</th>
+                      <th style="padding: 0.75rem;">Store</th>
+                      <th style="padding: 0.75rem;">Destination</th>
+                      <th style="padding: 0.75rem;">Method</th>
+                      <th style="padding: 0.75rem;">Earnings</th>
+                      <th style="padding: 0.75rem;">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="driver-history-body">
+                    <!-- Injected dynamically by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ADMIN WORKSPACE (Dynamic Display) -->
+          <div id="admin-workspace" class="dashboard-section" style="display: none;">
+            <h3>Admin Workspace</h3>
+
+            <!-- KPI Cards Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+              
+              <!-- Users Card -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem; text-align: center; box-shadow: var(--shadow);">
+                <div style="font-size: 1.8rem; margin-bottom: 0.25rem;">👥</div>
+                <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; font-weight: bold; letter-spacing: 0.05em;">Total Users</span>
+                <h4 style="font-size: 1.5rem; color: #fff; margin-top: 0.25rem; font-weight: 700;" id="admin-total-users">0</h4>
+              </div>
+
+              <!-- Stores Card -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem; text-align: center; box-shadow: var(--shadow);">
+                <div style="font-size: 1.8rem; margin-bottom: 0.25rem;">🏪</div>
+                <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; font-weight: bold; letter-spacing: 0.05em;">Total Stores</span>
+                <h4 style="font-size: 1.5rem; color: #fff; margin-top: 0.25rem; font-weight: 700;" id="admin-total-stores">0</h4>
+              </div>
+
+              <!-- Products Card -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem; text-align: center; box-shadow: var(--shadow);">
+                <div style="font-size: 1.8rem; margin-bottom: 0.25rem;">🐟</div>
+                <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; font-weight: bold; letter-spacing: 0.05em;">Total Products</span>
+                <h4 style="font-size: 1.5rem; color: #fff; margin-top: 0.25rem; font-weight: 700;" id="admin-total-products">0</h4>
+              </div>
+
+              <!-- Orders Card -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem; text-align: center; box-shadow: var(--shadow);">
+                <div style="font-size: 1.8rem; margin-bottom: 0.25rem;">📦</div>
+                <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; font-weight: bold; letter-spacing: 0.05em;">Total Orders</span>
+                <h4 style="font-size: 1.5rem; color: #fff; margin-top: 0.25rem; font-weight: 700;" id="admin-total-orders">0</h4>
+              </div>
+
+              <!-- Active Coupons Card -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem; text-align: center; box-shadow: var(--shadow);">
+                <div style="font-size: 1.8rem; margin-bottom: 0.25rem;">🎟️</div>
+                <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; font-weight: bold; letter-spacing: 0.05em;">Active Discounts</span>
+                <h4 style="font-size: 1.5rem; color: var(--color-accent); margin-top: 0.25rem; font-weight: 700;" id="admin-active-discounts">0</h4>
+              </div>
+
+              <!-- Overdue Orders Card -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.25rem; text-align: center; box-shadow: var(--shadow);" id="admin-overdue-card">
+                <div style="font-size: 1.8rem; margin-bottom: 0.25rem;">⚠️</div>
+                <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; font-weight: bold; letter-spacing: 0.05em;">Overdue Orders</span>
+                <h4 style="font-size: 1.5rem; color: #fff; margin-top: 0.25rem; font-weight: 700;" id="admin-overdue-orders">0</h4>
+              </div>
+
+            </div>
+
+            <!-- Time Simulation & Coupon Generator row -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+              
+              <!-- Time Simulation Control -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.5rem;">
+                <h4 style="font-size: 1.1rem; color: #fff; margin-bottom: 0.75rem;">Time Progression Simulation</h4>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem; line-height: 1.4;">
+                  Advance the system clock virtually by 1 day. This triggers SLA status scanning and processes overdue order cancellations automatically.
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                  <button class="btn btn-primary" id="btn-simulate-next-day" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1rem;">
+                    <span>⏳</span> Simulate Next Day
+                  </button>
+                  <div style="text-align: center; font-size: 0.85rem; color: var(--color-accent); font-weight: bold;" id="admin-simulation-offset-display">
+                    Virtual Offset: +0 Days
+                  </div>
+                </div>
+              </div>
+
+              <!-- Discount Code Form -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 1.5rem;">
+                <h4 style="font-size: 1.1rem; color: #fff; margin-bottom: 1rem;">Generate Discount Code</h4>
+                <form id="form-generate-discount">
+                  <div class="form-group" style="margin-bottom: 0.75rem;">
+                    <label for="discount-type" style="font-size: 0.8rem; margin-bottom: 0.25rem;">Type</label>
+                    <select id="discount-type" class="form-control" style="font-size: 0.85rem; padding: 0.4rem 0.5rem; background: var(--bg-card); color: #fff; border: 1px solid var(--border-glass);" required>
+                      <option value="voucher">Voucher (Limited usage, e.g. BUYER limit)</option>
+                      <option value="promo">Promo (Global unlimited usage)</option>
+                    </select>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 0.75rem;">
+                    <label for="discount-code" style="font-size: 0.8rem; margin-bottom: 0.25rem;">Code (Unique)</label>
+                    <input type="text" id="discount-code" class="form-control" placeholder="e.g. SEASAVING" required style="font-size: 0.85rem; padding: 0.4rem 0.5rem;">
+                  </div>
+                  <div class="form-group" style="margin-bottom: 0.75rem;">
+                    <label for="discount-value" style="font-size: 0.8rem; margin-bottom: 0.25rem;">Discount Value (IDR)</label>
+                    <input type="number" id="discount-value" class="form-control" placeholder="e.g. 15000" min="1" required style="font-size: 0.85rem; padding: 0.4rem 0.5rem;">
+                  </div>
+                  <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0.75rem; margin-bottom: 1rem;">
+                    <div class="form-group">
+                      <label for="discount-expiry" style="font-size: 0.8rem; margin-bottom: 0.25rem;">Expiry Date</label>
+                      <input type="datetime-local" id="discount-expiry" class="form-control" required style="font-size: 0.85rem; padding: 0.4rem 0.75rem;">
+                    </div>
+                    <div class="form-group" id="discount-usage-container">
+                      <label for="discount-usage" style="font-size: 0.8rem; margin-bottom: 0.25rem;">Usage Limit</label>
+                      <input type="number" id="discount-usage" class="form-control" placeholder="e.g. 10" min="1" value="10" style="font-size: 0.85rem; padding: 0.4rem 0.75rem;">
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-secondary" style="width: 100%; font-size: 0.85rem; padding: 0.5rem;">Generate Code</button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PRODUCT DETAIL MODAL (PUBLIC GUEST VISIBLE) -->
+  <div class="modal" id="product-detail-modal">
+    <div class="modal-content">
+      <button class="close-modal" id="btn-close-modal">×</button>
+      <div class="modal-body">
+        <div class="modal-img-section" id="modal-product-img">🐟</div>
+        <div class="modal-info-section">
+          <div>
+            <span class="modal-category" id="modal-product-tag">Category</span>
+            <h2 class="modal-title" id="modal-product-title">Product Title</h2>
+            <p class="modal-desc" id="modal-product-desc">Detail descriptions...</p>
+            
+            <div class="modal-specs">
+              <div class="modal-spec-row">
+                <span>Vendor:</span>
+                <span id="modal-product-seller">Sea King</span>
+              </div>
+              <div class="modal-spec-row">
+                <span>Origin:</span>
+                <span id="modal-product-origin">Sunda Strait, Indonesia</span>
+              </div>
+              <div class="modal-spec-row">
+                <span>Freshness:</span>
+                <span id="modal-product-freshness">Premium Fresh Catch</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="modal-price-action">
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">Price</div>
+              <div class="modal-price" id="modal-product-price">Rp 0</div>
+            </div>
+            <button class="btn btn-primary" id="btn-modal-action">Purchase / Inquire</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT FORM MODAL (SELLER WORKSPACE) -->
+  <div class="modal" id="product-form-modal">
+    <div class="modal-content" style="max-width: 500px;">
+      <button class="close-modal" id="btn-close-product-modal">×</button>
+      <div class="modal-info-section" style="padding: 2rem;">
+        <h2 id="product-modal-title" style="margin-bottom: 1.5rem; font-size: 1.6rem;">Add Product</h2>
+        <form id="form-product">
+          <input type="hidden" id="product-id-input">
+          <div class="form-group">
+            <label for="product-name-input">Product Name</label>
+            <input type="text" id="product-name-input" class="form-control" required placeholder="e.g. Fresh Rock Lobster">
+          </div>
+          <div class="form-group">
+            <label for="product-desc-input">Description</label>
+            <textarea id="product-desc-input" class="form-control" required placeholder="e.g. Caught daily in Sunda Strait..." style="min-height: 80px;"></textarea>
+          </div>
+          <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+              <label for="product-price-input">Price (IDR)</label>
+              <input type="number" id="product-price-input" class="form-control" required min="0" placeholder="e.g. 150000">
+            </div>
+            <div>
+              <label for="product-stock-input">Stock Quantity</label>
+              <input type="number" id="product-stock-input" class="form-control" required min="0" placeholder="e.g. 20">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" id="btn-product-submit">Save Product</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT SUMMARY MODAL -->
+  <div class="modal" id="checkout-modal">
+    <div class="modal-content" style="max-width: 500px;">
+      <button class="close-modal" id="btn-close-checkout-modal">×</button>
+      <div class="modal-info-section" style="padding: 2rem;">
+        <h2 style="margin-bottom: 1rem; font-size: 1.6rem; color: #fff;">Order Checkout Summary</h2>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Please review your order specifications and pricing details before finalizing the transaction.</p>
+        
+        <div class="form-group">
+          <label for="checkout-delivery-method">Select Delivery Method</label>
+          <select id="checkout-delivery-method" class="form-control" style="background: rgba(10,17,40,0.8); border: 1px solid var(--border-glass);">
+            <option value="Regular" selected>Regular (Rp 10.000) - 2-3 Days</option>
+            <option value="Next Day">Next Day (Rp 25.000) - 1 Day</option>
+            <option value="Instant">Instant (Rp 50.000) - 3-6 Hours</option>
+          </select>
+        </div>
+
+        <!-- Coupon / Discount input -->
+        <div class="form-group">
+          <label for="checkout-discount-code">Apply Discount Code (Voucher/Promo)</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="text" id="checkout-discount-code" class="form-control" placeholder="e.g. PROMO20" style="text-transform: uppercase;">
+            <button type="button" class="btn btn-secondary" id="btn-apply-discount" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Apply</button>
+          </div>
+          <div id="discount-validation-status" style="font-size: 0.78rem; margin-top: 0.35rem; display: none;"></div>
+        </div>
+
+        <!-- Price Breakdown -->
+        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; font-size: 0.9rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+            <span style="color: var(--text-secondary);">Items Subtotal:</span>
+            <span id="checkout-subtotal">Rp 0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #10b981; display: none;" id="checkout-discount-row">
+            <span>Discount Applied (<span id="checkout-discount-label">None</span>):</span>
+            <span id="checkout-discount-fee">-Rp 0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+            <span style="color: var(--text-secondary);">Delivery Charge:</span>
+            <span id="checkout-delivery-fee">Rp 10.000</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+            <span style="color: var(--text-secondary);">Government Tax (PPN 12%):</span>
+            <span id="checkout-tax">Rp 0</span>
+          </div>
+          <div style="border-top: 1px solid var(--border-glass); padding-top: 0.5rem; margin-top: 0.5rem; display: flex; justify-content: space-between; font-weight: bold; font-size: 1.05rem;">
+            <span style="color: #fff;">Grand Total:</span>
+            <span id="checkout-total" style="color: var(--color-accent);">Rp 0</span>
+          </div>
+        </div>
+
+        <div style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1.5rem;" id="checkout-wallet-status">
+          Your wallet balance: Rp 0
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%;" id="btn-confirm-checkout">Confirm & Pay</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
