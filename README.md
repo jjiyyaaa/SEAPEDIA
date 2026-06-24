@@ -66,14 +66,42 @@ seapedia/
    ```bash
    npm start
    ```
-   The backend server will list on **Port 5000** (`http://localhost:5000`).
+   The backend server will listen on **Port 5000** (`http://localhost:5000`).
 
 ### 2. Frontend Client Setup
 To load the client-side SPA, open the [index.html](frontend/index.html) file directly in any modern web browser. It connects automatically to the running local API backend on port 5000.
 
 ---
 
-## 💎 Key Architecture & Unique Features
+## 🔒 Environment Variables
+
+The backend relies on the following configurations in the `backend/.env` file:
+* `PORT`: The port number the Express server runs on (defaults to `5000`).
+* `JWT_SECRET`: Secret key used for signing JSON Web Tokens (defaults to `seapedia_secure_jwt_secret_token_key_2026`).
+* `DATABASE_URL`: Connection string for the database (defaults to SQLite: `file:./dev.db`).
+
+---
+
+## 🛡️ Creating an Admin Account
+
+To access the platform's Admin Workspace (to monitor KPIs, simulate time progression, and generate discount codes):
+1. Open the application frontend (`index.html`) in your browser.
+2. Click **Login / Register** in the top navigation bar.
+3. Switch to the **Register** tab.
+4. Fill in a username (e.g. `admin_master`), email (e.g. `admin@seapedia.com`), and password.
+5. In the checkbox selection, **uncheck Buyer/Seller/Driver** and check **Admin (Single Role)**.
+6. Click **Register Account**, then log in with your credentials.
+7. Upon successful login, you will be redirected directly to the protected Admin Workspace.
+
+*(Note: Under server-side role validation constraint rules, the `ADMIN` role is a single-role account and cannot be combined with Buyer, Seller, or Driver roles).*
+
+---
+
+## 💎 Key Architecture & Documentation
+
+For comprehensive details on other parts of the system:
+- **API Endpoint Details**: Refer to [API.md](API.md) for Swagger-equivalent endpoint specifications.
+- **Security Engineering**: Refer to [SECURITY.md](SECURITY.md) for implementation details on SQL Injection, XSS sanitization, and RBAC.
 
 ### 1. Multi-Role Session & Switcher
 - Users can register with multiple roles (`BUYER`, `SELLER`, `DRIVER`).
